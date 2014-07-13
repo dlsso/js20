@@ -18,7 +18,7 @@ var DungeonCrawl = (function() {
 	var MIDDLE_EARTH_MONSTERS = [] 
 	var inventory = []
 	var info = "Welcome to Dungeon Crawl. Press any key to begin."
-	
+	var moved = false
 
 	var World = function(name, player, map, itemset, monsters) {
 		this.name = name;
@@ -160,22 +160,36 @@ var DungeonCrawl = (function() {
 			// })
 		})
 
-
-
-		$('.in-game').on('transitionend', function(e){
-			$(document).on('keydown', function(key){ 
-				if(key.which===37){ourHero.move('left'); if(moved){$(this).off()}}
-				else if(key.which===38){ourHero.move('up'); if(moved){$(this).off()}}
-				else if(key.which===39){ourHero.move('right'); if(moved){$(this).off()}}
-				else if(key.which===40){ourHero.move('down'); if(moved){$(this).off()}}
-			})
-				$('.room').on('transitionend', function(e){
-					e.stopPropagation()
-				}) // e.stopPropagation()
-				console.log(e)
-				//isPropagationStopped: function U(){return!0}
+		$(document).on('keydown', function(key){
+				if(key.which===37){
+					$('.'+currentRoom.number+'').on('transitionend', function(e) {
+						ourHero.move('left'); 
+					})
+					if(moved){$(this).off()}
+				}
+				else if(key.which===38){
+					$('.'+currentRoom.number+'').on('transitionend', function(e) {
+						ourHero.move('up'); 
+					})
+					if(moved){$(this).off()}
+				}
+				else if(key.which===39){
+					$('.'+currentRoom.number+'').on('transitionend', function(e) {
+						ourHero.move('right'); 
+					})
+					if(moved){$(this).off()}
+				}
+				else if(key.which===40){
+					$('.'+currentRoom.number+'').on('transitionend', function(e) {
+						ourHero.move('down'); 
+					})
+					if(moved){$(this).off()}
+				}
+			
 		});
+
 		
+		$('.'+4+'').on('transitionend', function(){ console.log("transition detected here though");console.log($(currentRoom.number))})
 
 		$(document).on('click', function(key){
 			console.log("clicked")
