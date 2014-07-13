@@ -76,10 +76,11 @@ nav a{
 
 .in-game {
 	position: absolute;
-	width: 2640px;
+	width: 3520px;
 	height: 2000px;
 	left:0;
 	top:-1500px;
+	left: -880px;
 	transition: left .5s ease, top .5s ease;
 }
 
@@ -90,4 +91,29 @@ nav a{
 	float: left;
 	transition: opacity .8s linear;
 	opacity: 0;
+}
+
+.scone{
+	width: 43px;
+	height: 35px;
+	position: relative;
+	top: 370px;
+	left: 274px;
+
+}
+
+.knife{
+	width: 60px;
+	height: 48px;
+	position: relative;
+	top: 443px;
+	left: 587px;
+	transition: all .5s ease;
+}
+
+.knife-zoom{
+	width: 420px;
+	height: 336px;
+	top: 120px;
+	left: 220px;
 }
