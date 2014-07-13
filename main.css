@@ -61,8 +61,33 @@ nav a{
 	font-size: 87%;
 }
 
+#info{
+	height: 3em;
+}
+
 .game{
 	width: 880px;
 	height: 500px;
 	background-color: black;
+	border: 2px solid black;
+	overflow: hidden;
+	position: relative;
+}
+
+.in-game {
+	position: absolute;
+	width: 2640px;
+	height: 2000px;
+	left:0;
+	top:-1500px;
+	transition: left .5s ease, top .5s ease;
+}
+
+.room{
+	background-size: cover;
+	width: 880px;
+	height:500px;
+	float: left;
+	transition: opacity .8s linear;
+	opacity: 0;
 }
