@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Dungeon Crawl</title>
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Bilbo' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
@@ -20,6 +21,8 @@
 
 			
 			<div class="game">
+				<div id="help-menu" class="help-menu hidden"><h1>Help</h1><p>This is where the help will be when I put it here.</p></div>
+				<div id="inventory-menu" class="inventory-menu hidden"><h1>Inventory</h1><p>This is where the inventory will be when I put it here.</p></div>
 				<div class="in-game">
 					<div class="room 1"></div>
 					<div class="room 2"></div>
@@ -44,9 +47,9 @@
 			</div>
 			<p id="info"></p>
 
-			<h3 id="name">Name: </h3>
-			<h3 id="location">Location: </h3>
-			<h3 id="inventory">Inventory: </h3>
+			<h3 class="readout" id="name"><strong>Name: </strong></h3>
+			<h3 class="readout" id="location"><strong>Location: </strong></h3>
+			<h3 class="readout" id="inventory"><strong>Inventory: </strong></h3>
 
 		</div>
 	</div>

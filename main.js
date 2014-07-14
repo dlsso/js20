@@ -1,5 +1,5 @@
 var DungeonCrawl = (function() {
-	var PLAYER_NAME = prompt("Please enter your name", "Aragorn")
+	var PLAYER_NAME = prompt("Please enter your name", "Bilbo Baggins")
 	var MIDEVIL_ITEMS = [											// I know it's not spelled like that, it's just fun (and shorter)
 						rustyKnife = {
 							name: "rusty knife",
@@ -16,7 +16,7 @@ var DungeonCrawl = (function() {
 						]
 	var MIDDLE_EARTH_MONSTERS = [] 
 	var inventory = []
-	var info = "Welcome to Dungeon Crawl. Press any key to begin."
+	var info = "Welcome to Dungeon Crawl. If you need help once the game starts you can press H at any time. Press any key to begin."
 	
 
 	var World = function(name, player, map, itemset, monsters) {
@@ -31,12 +31,13 @@ var DungeonCrawl = (function() {
 		// Sets player location
 		this.setLocation = function(currentRoom){
 			this.location = currentRoom
-			$('#location').empty().append("Location: "+ currentRoom.name)	// Updates location in player info section
+			$('#location').empty().append("<strong>Location: </strong>"+ currentRoom.name)	// Updates location in player info section
 			$('.'+currentRoom.number+'').css("background-image", "url('"+currentRoom.pic+"')")	// Loads the picture for the current room
-			console.log(currentRoom.name)
+			$('.'+currentRoom.number+'').css("opacity", "1")	// Changes current room to visible
+			$('.container').css('background', currentRoom.color)	// Changes background to the right color
+		}
 
-			$('.'+currentRoom.number+'').css("opacity", "1")
-
+		this.updateRoomInfo = function(currentRoom){
 			// This section tells players if a room contains items. Accounts for differences for multiple items
 			var itemsInfo = ''
 			if(currentRoom.items.length===1){itemsInfo = " There is " + currentRoom.items[0].description + " here." }
@@ -47,10 +48,9 @@ var DungeonCrawl = (function() {
 				};
 				itemsInfo += currentRoom.items[currentRoom.items.length-1].description + " here."
 			}
+
 			info = currentRoom.description + itemsInfo 	// Adds items info to room description
 			$('#info').empty().append(info)		// Displays full info
-
-			$('.container').css('background', currentRoom.color)	// Changes background to the right color
 		}
 
 		this.move = function(direction){
@@ -63,6 +63,7 @@ var DungeonCrawl = (function() {
 						$('.'+currentRoom.number+'').css("opacity", "0")
 						currentRoom = SMALL_DUNGEON[i];
 						ourHero.setLocation(currentRoom)
+						ourHero.updateRoomInfo(currentRoom)
 						moved = true
 					}
 				}
@@ -149,15 +150,20 @@ var DungeonCrawl = (function() {
 			  $('#inventory').append(value.name+', ')
 			})
 			ourHero.setLocation(currentRoom)
+			ourHero.updateRoomInfo(currentRoom)
 		})
 
+		// When there is not a slide transition happening let the player move with the arrow keys, bring up menus
 		$('.in-game').on('transitionend', function(e){
-			$(document).on('keydown', function(key){ 
+			$(document).on('keydown', function(key){
+				if(key.which===73){$('.inventory-menu').slideToggle()}
+				if(key.which===72){$('.help-menu').slideToggle()}
 				if(key.which===37){ourHero.move('left'); if(moved){$(document).off('keydown')}}
 				else if(key.which===38){ourHero.move('up'); if(moved){$(document).off('keydown')}}
 				else if(key.which===39){ourHero.move('right'); if(moved){$(document).off('keydown')}}
 				else if(key.which===40){ourHero.move('down'); if(moved){$(document).off('keydown')}}
 			})
+				// Stops fade transitions from interfering
 				$('.room').on('transitionend', function(e){
 					e.stopPropagation()
 				})
@@ -180,29 +186,35 @@ var DungeonCrawl = (function() {
 			$('.btn-container').toggleClass('hidden')
 		})
 
+		// Updates screen, room, inventory when take button is clicked
 		$(document).on('click', '.take', function(key){
 			var itemName = $(this).data('item')
 			$(this).parent().siblings().attr('id', itemName).addClass('hidden')	// Hide item
 			$('.btn-container').addClass('hidden') // Hide button
 
-			console.log(itemName)
-
 			// Remove item from room
 			var index = currentRoom.items.indexOf(eval(itemName))
-			console.log(index)
 			if (index > -1) {
+				var itemObject = currentRoom.items[index]
 			    currentRoom.items.splice(index, 1);
 			}
-			console.log(currentRoom.items)
-			
-			// Update room
-			// Add item to inventory
-			// Update inventory
-			// $('.'+currentRoom.number+' .btn-container').empty().append('<button class="safe" data-object=”scone”> Take '+scone.name+'</button')
-			// info = "This is "+scone.description+"."
-			// $('#info').empty().append(info)
-			// $('.btn-container').toggleClass('hidden')
+
+			ourHero.updateRoomInfo(currentRoom)		// Updates room
+			ourHero.inventory.push(itemObject)	// Adds item to inventory
+			// Update inventory display
+			$('#inventory').empty().append("<strong>Inventory: </strong>")
+			$.each(inventory, function( index, value ) {
+			  $('#inventory').append(value.name+', ')
+			})
 		})
+
+
+		$(".btn1").click(function(){
+		    $("p").slideUp();
+		  });
+		  $(".btn2").click(function(){
+		    $("p").slideDown();
+		});
 
 		console.log(world.name+' created!')
 		console.log('Playing as: '+PLAYER_NAME)
