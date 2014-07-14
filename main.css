@@ -99,7 +99,7 @@ nav a{
 	position: relative;
 	top: 370px;
 	left: 274px;
-
+	transition: all .5s ease;
 }
 
 .knife{
@@ -116,4 +116,46 @@ nav a{
 	height: 336px;
 	top: 120px;
 	left: 220px;
+}
+.scone-zoom{
+	width: 215px;
+	height: 175px;
+	top: 250px;
+	left: 350px;
+}
+
+.btn-container{
+	float: right;
+	margin-top: 440px;
+	margin-right: 30px
+
+}
+
+button{
+	box-shadow: 5px 5px 10px 0px #1c1b18;
+	background-color:#eae0c2;
+	border-radius:8px;
+	border: none;
+	font-weight:bold;
+	padding:10px 14px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+
+button:hover {
+	background-color:#ccc2a6;
+}
+
+button:active {
+	position:relative;
+	top:1px;
+}
+
+.take{
+	color:#060;
+}
+
+
+.hidden{
+	display: none;
 }

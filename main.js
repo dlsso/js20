@@ -1,7 +1,6 @@
 var DungeonCrawl = (function() {
 	var PLAYER_NAME = prompt("Please enter your name", "Aragorn")
-
-	var MIDEVIL_ITEMS = [
+	var MIDEVIL_ITEMS = [											// I know it's not spelled like that, it's just fun (and shorter)
 						rustyKnife = {
 							name: "rusty knife",
 							description: "a rusty knife"
@@ -12,7 +11,7 @@ var DungeonCrawl = (function() {
 						},
 						scone = {
 							name: "scone",
-							description: "a blueberry scone"
+							description: "a delicious-looking blueberry scone"
 						}
 						]
 	var MIDDLE_EARTH_MONSTERS = [] 
@@ -113,8 +112,8 @@ var DungeonCrawl = (function() {
 		this.number = number
 	}
 
-	var Itemset = function() {
-
+	var Itemset = function(itemArray) {
+		this.items = itemArray
 	}
 
 	var Monsters = function() {
@@ -140,27 +139,17 @@ var DungeonCrawl = (function() {
 
 
 	var init = function() {				// Creates the init method for DungeonCrawl
-		var world = new World("Middle Earth", ourHero, smallDungeon, midevilItems, middleEarthMonsters )
+		var world = new World("Middle Earth", ourHero, smallDungeon, midevilItems, middleEarthMonsters )	// Instantiate world
+		$('#info').append(info)		// Welcome line
 
-		$('#info').append(info)
-
+		// Start the game
 		$(document).one('keydown', function(key){
 			$('#name').append(PLAYER_NAME)
 			$.each(inventory, function( index, value ) {
 			  $('#inventory').append(value.name+', ')
 			})
 			ourHero.setLocation(currentRoom)
-
-			// $(document).on('keydown', function(key){
-			// 	if(key.which===37){ourHero.move('left')}
-			// 	else if(key.which===38){ourHero.move('up');}
-			// 	else if(key.which===39){ourHero.move('right')}
-			// 	else if(key.which===40){ourHero.move('down')}
-			// 	$(this).off()
-			// })
 		})
-
-
 
 		$('.in-game').on('transitionend', function(e){
 			$(document).on('keydown', function(key){ 
@@ -174,10 +163,47 @@ var DungeonCrawl = (function() {
 				})
 		});
 
-		$(document).on('click', '#knife', function(key){
-			console.log('clicked')
-			$('#knife').toggleClass('knife-zoom')
+		$(document).on('click', '#rustyKnife', function(key){
+			$('#rustyKnife').toggleClass('knife-zoom')
+			$('.'+currentRoom.number+' .btn-container').empty().append('<button id="knife" data-item=rustyKnife class="take"> Take '+rustyKnife.name+'</button')
+			info = "This is "+rustyKnife.description+"."
+			$('#info').empty().append(info)
+			$('.btn-container').toggleClass('hidden')
+
 		})
+
+		$(document).on('click', '#scone', function(key){
+			$('#scone').toggleClass('scone-zoom')
+			$('.'+currentRoom.number+' .btn-container').empty().append('<button data-item=scone class="take"> Take '+scone.name+'</button')
+			info = "This is "+scone.description+"."
+			$('#info').empty().append(info)
+			$('.btn-container').toggleClass('hidden')
+		})
+
+		$(document).on('click', '.take', function(key){
+			var itemName = $(this).data('item')
+			$(this).parent().siblings().attr('id', itemName).addClass('hidden')	// Hide item
+			$('.btn-container').addClass('hidden') // Hide button
+
+			console.log(itemName)
+
+			// Remove item from room
+			var index = currentRoom.items.indexOf(eval(itemName))
+			console.log(index)
+			if (index > -1) {
+			    currentRoom.items.splice(index, 1);
+			}
+			console.log(currentRoom.items)
+			
+			// Update room
+			// Add item to inventory
+			// Update inventory
+			// $('.'+currentRoom.number+' .btn-container').empty().append('<button class="safe" data-object=”scone”> Take '+scone.name+'</button')
+			// info = "This is "+scone.description+"."
+			// $('#info').empty().append(info)
+			// $('.btn-container').toggleClass('hidden')
+		})
+
 		console.log(world.name+' created!')
 		console.log('Playing as: '+PLAYER_NAME)
 
