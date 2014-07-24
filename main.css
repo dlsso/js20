@@ -176,7 +176,7 @@ button:active {
 	height: 500px;
 	background: #fda;
 	box-shadow: inset 0px 0px 60px 15px #531;
-	padding: 50px;
+	padding: 80px;
 	z-index: 2;
 	overflow: auto;
 }
