@@ -2,7 +2,7 @@ body{background:#000;}
 
 body:after{
     display:none;
-    content: url(cellar.jpg) url(kitchen.jpg) url(outside.jpg) url(passages.jpg) url(study.jpg) url(trail.jpg);
+    content: url(cellar.jpg) url(kitchen.jpg) url(outside.jpg) url(passage.jpg) url(study.jpg) url(trail.jpg);
 }
 
 .container{
