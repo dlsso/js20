@@ -16,7 +16,7 @@ var DungeonCrawl = (function() {
 						]
 	var MIDDLE_EARTH_MONSTERS = [] 
 	var inventory = []
-	var info = "Welcome to Dungeon Crawl. If you need help once the game starts you can press H at any time. Press any key to begin."
+	var info = "Welcome to An Unexpected Journey. If you need help once the game starts you can press H at any time. Press any key to begin."
 	
 
 	var World = function(name, player, map, itemset, monsters) {
